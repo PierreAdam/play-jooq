@@ -1,0 +1,8 @@
+*.class
+.idea/
+*.iml
+*.jar
+target/
+.gradle
+.bsp
+*~
