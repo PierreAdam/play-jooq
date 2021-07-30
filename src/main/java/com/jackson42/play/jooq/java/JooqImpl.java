@@ -84,4 +84,9 @@ public class JooqImpl implements Jooq {
     public <T extends Record> T newRecord(final Table<T> table) {
         return this.internal.newRecord(table);
     }
+
+    @Override
+    public com.jackson42.play.jooq.scala.Jooq asScala() {
+        return this.internal;
+    }
 }

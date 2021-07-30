@@ -89,6 +89,7 @@ public interface Jooq {
      * The connection will only be established when necessary and will be managed by PlayFramework.
      * See https://www.jooq.org/doc/3.1/manual/sql-building/dsl-context/connection-vs-datasource/
      *
+     * @param db the db
      * @return the DSLContext from JOOQ
      */
     DSLContext getContext(final Database db);
@@ -120,4 +121,11 @@ public interface Jooq {
      * @return the t
      */
     <T extends Record> T newRecord(Table<T> table);
+
+    /**
+     * Get Jooq as a scala object.
+     *
+     * @return Jooq as scala
+     */
+    com.jackson42.play.jooq.scala.Jooq asScala();
 }

@@ -24,12 +24,14 @@
 
 package com.jackson42.play.jooq.scala
 
+import com.jackson42.play.jooq.configuration.JooqConfiguration
 import org.jooq.impl.DSL
-import org.jooq.{DSLContext, Record, SQLDialect, Table}
-import play.api.Configuration
+import org.jooq.{DSLContext, Record, Table}
 import play.api.db.Database
 
 import java.sql.Connection
+import com.jackson42.play.jooq.java
+
 import javax.inject.Inject
 
 /**
@@ -38,7 +40,7 @@ import javax.inject.Inject
  * @author Pierre Adam
  * @since 21.07.06
  */
-class JooqImpl @Inject()(database: Database, configuration: Configuration) extends Jooq {
+class JooqImpl @Inject()(database: Database, jooqConfiguration: JooqConfiguration) extends Jooq {
 
   /**
    * Initiate a query by creating a DSLContext using the given database.
@@ -74,7 +76,7 @@ class JooqImpl @Inject()(database: Database, configuration: Configuration) exten
    * @return the DSLContext from JOOQ
    */
   override def getContext(db: Database = database): DSLContext = {
-    DSL.using(db.dataSource, this.dialectFromConfiguration(db))
+    DSL.using(db.dataSource, this.jooqConfiguration.dialect(db))
   }
 
   /**
@@ -109,12 +111,11 @@ class JooqImpl @Inject()(database: Database, configuration: Configuration) exten
     this.getContext.newRecord(table)
 
   /**
-   * Gets the dialect from the configuration for the given database.
+   * Get Jooq as a Java object
    *
-   * @param db the database
-   * @return the dialect
+   * @return Jooq as Java
    */
-  private def dialectFromConfiguration(db: Database): SQLDialect = {
-    SQLDialect.valueOf(this.configuration.get[String]("jooq.%s.database.dialect".format(db.name)))
+  override def asJava(): java.Jooq = {
+    new java.JooqImpl(this)
   }
 }

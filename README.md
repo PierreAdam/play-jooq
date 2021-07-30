@@ -8,18 +8,16 @@
 
 Play-JOOQ is a Play Framework module that aims to integrate JOOQ in a Play project in Java or Scala.
 
-The motivation behind Play-JOOQ was to be able to have a consistent way of using JOOQ across several projects
-while keeping as much as possible the native Play Framework configuration and functionalities.
+The motivation behind Play-JOOQ was to be able to have a consistent way of using JOOQ across several projects while keeping as much as possible the native Play Framework
+configuration and functionalities.
 
 For more information on how to use JOOQ, checkout [JOOQ's documentation](https://www.jooq.org/).
-
 
 ## Build the module and local deployment
 
 ```shell
 $> sbt +publishLocal
 ```
-
 
 ### Publishing to Sonatype
 
@@ -49,8 +47,7 @@ libraryDependencies += "com.jackson42.play.jooq" % "play-jooq" % "21.07u1"
 
 ## Configuration
 
-Play-JOOQ utilize a part of the existing Play Framework configuration.
-As such, you will need to configure the standard Play database source. 
+Play-JOOQ utilize a part of the existing Play Framework configuration. As such, you will need to configure the standard Play database source.
 
 ```
 db {
@@ -92,6 +89,14 @@ jooq {
       # This is the package where your models should be generated.
       package = "models.generated"
     }
+
+    seeds {
+      # Required to enable the seeds. Default is false
+      enabled = true
+
+      # Folder of the seeds.
+      path = "seeds"
+    }
   }
   
   my-secondary-db {
@@ -102,8 +107,7 @@ jooq {
 
 ## How to use the library
 
-In your controller you can easily inject `Jooq`.
-Depending on if you're using scala or java, you might want to pay attention to the package.
+In your controller you can easily inject `Jooq`. Depending on if you're using scala or java, you might want to pay attention to the package.
 
 Example in java.
 
@@ -112,6 +116,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import play.mvc.Controller;
 import play.mvc.Results;
+
 import javax.inject.Inject;
 
 import com.jackson42.play.com.jackson42.play.jooq.java.Jooq;

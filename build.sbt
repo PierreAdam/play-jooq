@@ -16,6 +16,7 @@ lazy val root = project.in(file("."))
 
 libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play" % playVersion % Provided,
+  "com.typesafe.play" %% "play-guice" % playVersion % Provided,
   "com.typesafe.play" %% "play-jdbc" % playVersion % Provided,
   "org.jooq" % "jooq" % jooqVersion,
   "org.jooq" % "jooq-meta" % jooqVersion,

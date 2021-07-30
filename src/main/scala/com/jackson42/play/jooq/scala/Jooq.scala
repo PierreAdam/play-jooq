@@ -24,6 +24,7 @@
 
 package com.jackson42.play.jooq.scala
 
+import com.jackson42.play.jooq.java
 import org.jooq.{DSLContext, Record, Table}
 import play.api.db.Database
 
@@ -34,6 +35,7 @@ import play.api.db.Database
  * @since 21.07.06
  */
 trait Jooq {
+
   /**
    * Initiate a query by creating a DSLContext using the given database.
    * A connection will be open and will only be closed when the logic finish.
@@ -93,4 +95,11 @@ trait Jooq {
    * @return the new record
    */
   def newRecord[T <: Record](table: Table[T]): T
+
+  /**
+   * Get Jooq as a Java object
+   *
+   * @return Jooq as Java
+   */
+  def asJava(): java.Jooq
 }
