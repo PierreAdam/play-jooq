@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.jackson42.play.jooq
+package com.jackson42.play.jooq.generator
 
 import com.jackson42.play.jooq.configuration.{JooqConfiguration, JooqGeneratorConfig}
 import org.jooq.meta.jaxb
@@ -37,16 +37,11 @@ import javax.inject.Inject
  * @author Pierre Adam
  * @since 21.07.06
  */
-class JooqGenerationHelper @Inject()(database: Database, jooqConfiguration: JooqConfiguration) {
+class JooqGenerationHelperImpl @Inject()(jooqConfiguration: JooqConfiguration) extends JooqGenerationHelper {
 
-  def forgeConfiguration(dbName: String): Configuration = {
-    val config: JooqGeneratorConfig = jooqConfiguration.getGeneratorConfig(dbName)
-    new Configuration()
-      .withJdbc(this.getJdbc(config))
-      .withGenerator(this.getGenerator(dbName))
-  }
+  override def getConfigurationForDb(dbName: String): JooqGeneratorConfig = jooqConfiguration.getGeneratorConfig(dbName)
 
-  def getJdbc(config: JooqGeneratorConfig): Jdbc = {
+  override def getJdbc(config: JooqGeneratorConfig): Jdbc = {
     val jdbc = new Jdbc()
       .withDriver(config.jdbcDriver)
       .withUrl(config.jdbcUrl)
@@ -58,11 +53,7 @@ class JooqGenerationHelper @Inject()(database: Database, jooqConfiguration: Jooq
     jdbc
   }
 
-  def getGenerator(config: JooqGeneratorConfig): Generator = new Generator()
-    .withDatabase(this.getDatabase(config))
-    .withTarget(this.getTarget(config))
-
-  def getDatabase(config: JooqGeneratorConfig): jaxb.Database = {
+  override def getDatabase(config: JooqGeneratorConfig): jaxb.Database = {
     val jaxbDb = new jaxb.Database()
       .withName(config.dbType)
       .withIncludes(config.dbIncludes)
@@ -73,7 +64,7 @@ class JooqGenerationHelper @Inject()(database: Database, jooqConfiguration: Jooq
     jaxbDb
   }
 
-  def getTarget(config: JooqGeneratorConfig): Target = new Target()
+  override def getTarget(config: JooqGeneratorConfig): Target = new Target()
     .withDirectory(config.generatorDirectory)
     .withPackageName(config.generatorPackage)
 }

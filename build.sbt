@@ -1,7 +1,7 @@
 import BuildProperties._
 
 name := "play-jooq"
-ThisBuild / version := "21.07u1"
+ThisBuild / version := "21.08-SNAPSHOT"
 ThisBuild / organization := "com.jackson42.play.jooq"
 ThisBuild / scalaVersion := "2.13.6"
 

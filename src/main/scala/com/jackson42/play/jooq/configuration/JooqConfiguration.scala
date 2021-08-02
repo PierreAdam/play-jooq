@@ -12,7 +12,7 @@ import javax.inject.Inject
  * @author Pierre Adam
  * @since 21.07.30
  */
-class JooqConfiguration @Inject()(configuration: Configuration) {
+class JooqConfiguration @Inject()(configuration: Configuration) extends JooqConfigurationScalaVersion {
 
   /**
    * Gets the dialect from the configuration for the given database.
@@ -37,10 +37,8 @@ class JooqConfiguration @Inject()(configuration: Configuration) {
    *
    * @return
    */
-  def getDbWithSeeds: Seq[String] = new Configuration(this.configuration.underlying.atKey("db"))
-    .keys
+  def getDbWithSeeds: Seq[String] = this.getDbNamesFromConfig(this.configuration)
     .filter((dbName: String) => {
       this.configuration.getOptional[Boolean]("jooq.%s.seeds.enabled".format(dbName)).getOrElse(false)
     })
-    .toSeq
 }

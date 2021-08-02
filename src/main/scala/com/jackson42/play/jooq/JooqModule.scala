@@ -26,6 +26,7 @@ package com.jackson42.play.jooq
 
 import com.google.inject.AbstractModule
 import com.jackson42.play.jooq.configuration.JooqConfiguration
+import com.jackson42.play.jooq.generator.{JooqGenerationHelper, JooqGenerationHelperImpl}
 import com.jackson42.play.jooq.seeds.JooqSeeds
 
 /**
@@ -38,8 +39,8 @@ class JooqModule extends AbstractModule {
   override def configure(): Unit = {
     bind(classOf[JooqConfiguration]).asEagerSingleton()
     bind(classOf[scala.Jooq]).to(classOf[scala.JooqImpl])
-    bind(classOf[java.Jooq]).to(classOf[java.Jooq])
-    bind(classOf[JooqGenerationHelper]).to(classOf[JooqGenerationHelper])
+    bind(classOf[java.Jooq]).to(classOf[java.JooqImpl])
+    bind(classOf[JooqGenerationHelper]).to(classOf[JooqGenerationHelperImpl])
     bind(classOf[JooqSeeds]).asEagerSingleton()
   }
 }
